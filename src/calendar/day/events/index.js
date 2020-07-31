@@ -62,6 +62,8 @@ class Day extends Component {
                     }
                 ];
                 return (
+                    index < 3
+                    ?
                     <View key={event.id} style={[{
                         borderWidth: 2,
                         borderColor: event.color,
@@ -70,10 +72,18 @@ class Day extends Component {
                         height: 21,
                         padding: 3,
                         overflow: 'hidden',
-                        marginTop: index === 0 ? 0 : 5
+                        marginTop: 2
                     }, style.shadowEffect]}>
                         <Text style={{ fontWeight: 'bold', color: event.color, fontSize: 11 }}>{event.title}</Text>
                     </View>
+                    :
+                    index === 3
+                        ?
+                        <View style={{marginTop: 2, justifyContent: 'flex-start', alignItems: 'flex-start', height: 21}}>
+                            <Text style={{paddingLeft: 3,fontSize: 15, marginTop: -5, fontWeight: 'bold', color: 'gray'}}>...</Text>
+                        </View>
+                        :
+                        null
                 )
                 //return <View key={index} style={style}/>;
             });
@@ -98,12 +108,14 @@ class Day extends Component {
             textStyle.push(this.style.todayText);
         }
         return (
-            <View style={{ alignSelf: 'stretch', borderWidth: 1, borderColor: '#DBDBDB',}}>
-                <TouchableOpacity
+            <TouchableOpacity 
+                style={{ alignSelf: 'stretch', borderWidth: 1, borderColor: '#DBDBDB',}}
+                onPress={this.onDayPress}
+                onLongPress={this.onDayLongPress}
+            >
+                <View
                     testID={this.props.testID}
                     style={containerStyle}
-                    onPress={this.onDayPress}
-                    onLongPress={this.onDayLongPress}
                     disabled={marking.disableTouchEvent}
                     accessible
                     accessibilityRole={isDisabled ? undefined : 'button'}
@@ -112,13 +124,13 @@ class Day extends Component {
                     <Text allowFontScaling={false} style={textStyle}>
                         {String(this.props.children)}
                     </Text>
-                </TouchableOpacity>
+                </View>
                 <View style={this.style.eventSection}>
                     <ScrollView style={{paddingLeft: 5, paddingRight: 5}} showsVerticalScrollIndicator={false} >
                         {periods}
                     </ScrollView>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
