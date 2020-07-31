@@ -11,6 +11,7 @@ import UnitDay from './day/period';
 import MultiDotDay from './day/multi-dot';
 import MultiPeriodDay from './day/multi-period';
 import SingleDay from './day/custom';
+import EventsDay from './day/events';
 import CalendarHeader from './header';
 import shouldComponentUpdate from './updater';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -266,6 +267,8 @@ class Calendar extends Component {
       return MultiPeriodDay;
     case 'custom':
       return SingleDay;
+    case 'events':
+       return EventsDay;
     default:
       return Day;
     }
