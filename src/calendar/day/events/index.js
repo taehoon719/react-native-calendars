@@ -41,8 +41,6 @@ class Day extends Component {
     }
 
     renderPeriods(marking) {
-        console.log('123@marking');
-        console.log(marking);
         const baseDotStyle = [this.style.dot, this.style.visibleDot];
         if (
             marking.length > 0) {
