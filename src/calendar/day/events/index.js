@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { shouldUpdate } from '../../../component-updater';
 
 import styleConstructor from './style';
-
+import BlockedTime from './BlockedTime.png';
+import moment from 'moment';
 
 class Day extends Component {
     static displayName = 'IGNORE';
@@ -17,7 +18,8 @@ class Day extends Component {
         marking: PropTypes.any,
         onPress: PropTypes.func,
         onLongPress: PropTypes.func,
-        date: PropTypes.object
+        date: PropTypes.object,
+        availability: PropTypes.object
     };
 
     constructor(props) {
@@ -61,27 +63,27 @@ class Day extends Component {
                 ];
                 return (
                     index < 3
-                    ?
-                    <View key={event.id} style={[{
-                        borderWidth: 2,
-                        borderColor: event.color,
-                        borderRadius: 5,
-                        flexDirection: 'row',
-                        height: 21,
-                        padding: 3,
-                        overflow: 'hidden',
-                        marginTop: 2
-                    }, style.shadowEffect]}>
-                        <Text style={{ fontWeight: 'bold', color: event.color, fontSize: 11 }}>{event.title}</Text>
-                    </View>
-                    :
-                    index === 3
                         ?
-                        <View style={{marginTop: 2, justifyContent: 'flex-start', alignItems: 'flex-start', height: 21}}>
-                            <Text style={{paddingLeft: 3,fontSize: 15, marginTop: -5, fontWeight: 'bold', color: 'gray'}}>...</Text>
+                        <View key={event.id} style={[{
+                            borderWidth: 2,
+                            borderColor: event.color,
+                            borderRadius: 5,
+                            flexDirection: 'row',
+                            height: 21,
+                            padding: 3,
+                            overflow: 'hidden',
+                            marginTop: 2
+                        }, style.shadowEffect]}>
+                            <Text style={{ fontWeight: 'bold', color: event.color, fontSize: 11 }}>{event.title}</Text>
                         </View>
                         :
-                        null
+                        index === 3
+                            ?
+                            <View style={{ marginTop: 2, justifyContent: 'flex-start', alignItems: 'flex-start', height: 21 }}>
+                                <Text style={{ paddingLeft: 3, fontSize: 15, marginTop: -5, fontWeight: 'bold', color: 'gray' }}>...</Text>
+                            </View>
+                            :
+                            null
                 )
                 //return <View key={index} style={style}/>;
             });
@@ -106,11 +108,15 @@ class Day extends Component {
             textStyle.push(this.style.todayText);
         }
         return (
-            <TouchableOpacity 
-                style={{ alignSelf: 'stretch', borderWidth: 1, borderColor: '#DBDBDB',}}
+            <TouchableOpacity
+                style={{ alignSelf: 'stretch', borderWidth: 1, borderColor: '#DBDBDB', }}
                 onPress={this.onDayPress}
+                disabled={this.props.availability[moment(this.props.date.dateString).format('dddd').toUpperCase()][0].startHour === this.props.availability[moment(this.props.date.dateString).format('dddd').toUpperCase()][0].endHour}
                 onLongPress={this.onDayLongPress}
             >
+                {this.props.availability[moment(this.props.date.dateString).format('dddd').toUpperCase()][0].startHour === this.props.availability[moment(this.props.date.dateString).format('dddd').toUpperCase()][0].endHour &&
+                    <Image source={BlockedTime} style={{ position: 'absolute', flex: 1, height: '100%' }} />
+                }
                 <View
                     testID={this.props.testID}
                     style={containerStyle}
@@ -124,7 +130,7 @@ class Day extends Component {
                     </Text>
                 </View>
                 <View style={this.style.eventSection}>
-                    <ScrollView style={{paddingLeft: 5, paddingRight: 5}} showsVerticalScrollIndicator={false} >
+                    <ScrollView style={{ paddingLeft: 5, paddingRight: 5 }} showsVerticalScrollIndicator={false} >
                         {periods}
                     </ScrollView>
                 </View>

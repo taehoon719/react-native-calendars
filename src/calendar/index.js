@@ -210,6 +210,7 @@ class Calendar extends Component {
         <DayComp
           testID={`${SELECT_DATE_SLOT}-${dateAsObject.dateString}`}
           state={state}
+          availability={this.props.availability}
           theme={this.props.theme}
           onPress={this.pressDay}
           onLongPress={this.longPressDay}
