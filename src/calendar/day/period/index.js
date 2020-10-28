@@ -89,11 +89,13 @@ class Day extends Component {
       }
       if (next.startingDay) {
         prev.startingDay = {
+          filterColor: next.filterColor,
           color
         };
       }
       if (next.endingDay) {
         prev.endingDay = {
+          filterColor: next.filterColor,
           color
         };
       }
@@ -155,7 +157,7 @@ class Day extends Component {
           backgroundColor: this.theme.calendarBackground
         };
         rightFillerStyle = {
-          backgroundColor: flags.startingDay.color
+          backgroundColor: flags.startingDay.filterColor ? flags.startingDay.filterColor  : flags.startingDay.color
         };
         containerStyle.push({
           backgroundColor: flags.startingDay.color
@@ -165,7 +167,7 @@ class Day extends Component {
           backgroundColor: this.theme.calendarBackground
         };
         leftFillerStyle = {
-          backgroundColor: flags.endingDay.color
+          backgroundColor: flags.endingDay.filterColor ? flags.endingDay.filterColor  : flags.endingDay.color
         };
         containerStyle.push({
           backgroundColor: flags.endingDay.color
