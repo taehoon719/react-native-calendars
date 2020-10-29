@@ -160,6 +160,7 @@ class Day extends Component {
           backgroundColor: flags.startingDay.filterColor ? flags.startingDay.filterColor  : flags.startingDay.color
         };
         containerStyle.push({
+          borderRadius: 20,
           backgroundColor: flags.startingDay.color
         });
       } else if (flags.endingDay && !flags.startingDay) {
@@ -170,6 +171,7 @@ class Day extends Component {
           backgroundColor: flags.endingDay.filterColor ? flags.endingDay.filterColor  : flags.endingDay.color
         };
         containerStyle.push({
+          borderRadius: 20,
           backgroundColor: flags.endingDay.color
         });
       } else if (flags.day) {
@@ -185,6 +187,7 @@ class Day extends Component {
           backgroundColor: this.theme.calendarBackground
         };
         containerStyle.push({
+          borderRadius: 20,
           backgroundColor: flags.endingDay.color
         });
       }
